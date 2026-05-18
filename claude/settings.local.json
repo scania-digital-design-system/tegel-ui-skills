@@ -1,7 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(grep -oiE \"\\(error|warning|failed|hydrat\\)[^<>\\\\\"]{0,80}\" /tmp/page.html)"
-    ]
-  }
-}
