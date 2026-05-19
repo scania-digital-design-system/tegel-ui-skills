@@ -4,6 +4,31 @@ Tegel design-system skills for AI coding agents (Claude Code and Codex). Drop th
 
 Maintained by the Scania Digital Design System team — but anyone in the org can contribute, regardless of role or tool.
 
+## Quickstart — let the agent do it
+
+If you already have Claude Code or Codex set up, the whole flow is three messages. No terminal needed.
+
+1. **Open the agent inside your project** — a new folder, or one you're already working in. The installer only writes to `.claude/skills/` and `AGENTS.md`, so it drops cleanly into existing projects without touching anything else.
+
+2. **Tell the agent:**
+   > Install the Tegel UI skills from github.com/scania-digital-design-system/tegel-ui-skills
+
+   It runs the installer for you. Takes a few seconds.
+
+3. **Ask for what you want, and ask for a preview:**
+   > Build me a Tegel dashboard with a header, side menu, footer, and a vehicle status table. Then give me a preview link.
+
+That's it. Open the link and you have a working page.
+
+### Tips for better results
+
+- **Be concrete.** *"Settings page with email + SMS notification toggles and a Save button"* beats *"make a settings UI"*. The agent picks better components when it has fewer guesses to make.
+- **Always ask for a preview link.** Reading code is opaque; seeing the page is concrete — you'll spot wrong colors, broken layout, or missing components in seconds.
+- **Build one section at a time.** Header first, review, then side menu, then content. Tegel components nest in specific ways; incremental requests catch mistakes early instead of compounding them.
+- **Describe what you see when something's off.** *"The header is light gray instead of dark blue"* gives the agent a target. *"It looks broken"* doesn't.
+- **Close the loop when you correct something.** Run `/tegel-skill-fix` — it diffs your fix, finds the responsible skill, and opens a PR upstream so everyone benefits next time someone installs.
+- **Re-run the installer when something feels stale.** Tell the agent: *"Re-install the Tegel UI skills."* Safe to run anytime; pulls in the team's latest fixes.
+
 ## Install
 
 In the project where you want the agent to know Tegel:
