@@ -8,8 +8,10 @@
   },
   "files": [
     "bin",
-    "skills",
-    "templates"
+    "SKILL.md",
+    "references",
+    "assets",
+    "agents"
   ],
   "engines": {
     "node": ">=18"

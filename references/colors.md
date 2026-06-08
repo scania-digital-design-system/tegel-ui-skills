@@ -5,13 +5,13 @@ description: Use Tegel brand-themed color tokens when working in a project that 
 
 # Tegel Colors
 
-This skill ships brand-themed color tokens from the Scania Tegel design system, packaged for use in any project. Two brands (Scania, Traton) × two modes (light, dark) = four themes, all reachable by adding classes to a root element.
+This reference ships brand-themed color tokens from the Scania Tegel design system, packaged for use in any project. Two brands (Scania, Traton) x two modes (light, dark) = four themes, all reachable by adding classes to a root element.
 
-The companion CSS file is **[`tegel-colors.css`](./tegel-colors.css)** — a sibling of this SKILL.md. When initializing the skill in a new project, copy that file directly (don't try to extract it from this markdown).
+The companion CSS file is `assets/tegel-colors.css` in this skill folder. When initializing standalone Tegel colors in a new project, copy that file directly; do not try to extract CSS from this markdown.
 
 ## When to invoke
 
-Apply this skill whenever the user, in a project that has adopted Tegel colors:
+Apply this reference whenever the user, in a project that has adopted Tegel colors:
 
 - styles a new component or redesigns an existing one
 - asks for a color, background, border, text color, or status color
@@ -19,14 +19,14 @@ Apply this skill whenever the user, in a project that has adopted Tegel colors:
 - mentions Tegel, Scania, Traton, or design tokens
 - pastes a hex value and asks what to use instead
 
-Do **not** invoke this skill for projects that don't use Tegel — check for the presence of `tegel-colors.css`, `@scania/tegel`, or `tegel-styles` first. If none exist, ask the user before initializing.
+Do **not** apply this reference to projects that do not use Tegel — check for the presence of `tegel-colors.css`, `@scania/tegel`, or `tegel-styles` first. If none exist, ask the user before initializing.
 
 ## Setup (one-time, per project)
 
 If the project does not yet have Tegel colors installed, do the following:
 
 1. Check whether the project already imports `@scania/tegel` or `tegel-styles`. If yes, skip to "Selecting brand and mode" — the tokens are already available.
-2. If not, copy the sibling file [`tegel-colors.css`](./tegel-colors.css) to `src/styles/tegel-colors.css` (or the equivalent location for the project's stack — `app/styles/`, `assets/css/`, `public/`, etc.). Read it with the Read tool and Write it to the destination — do not paraphrase or hand-edit the contents.
+2. If not, copy `assets/tegel-colors.css` from this skill folder to `src/styles/tegel-colors.css` (or the equivalent location for the project's stack: `app/styles/`, `assets/css/`, `public/`, etc.). Copy it verbatim; do not paraphrase or hand-edit the contents.
 3. Add a single import at the root entry point. Pick the form that matches the stack:
 
    ```ts
@@ -82,6 +82,8 @@ When you need a color, work top-down through these decisions:
 
 For inverted regions, append `-inverse` before the variant: `--color-text-inverse-base`, `--color-background-inverse-layer-01`, etc.
 
+For Scania light mode, the preferred primary page/canvas background is `--color-background-base`, which resolves to white / Scania grey 00. Grey 50 is the secondary background colour and can be used for secondary page areas or blocks, but components placed on that surface should use their Secondary mode variant when available. Do not manually recolour official component instances to force contrast. Scania Card components keep an official white background in light mode; never replace them with local frames or override their fills.
+
 ## Example: status alert
 
 ```css
@@ -128,19 +130,19 @@ body,
 
 The token resolves correctly under all four themes — the inner element inherits body's `tds-mode-*` class via the cascade, so no per-mode override is needed.
 
-## What this skill does NOT cover
+## What this reference does NOT cover
 
-- **Typography, motion, spacing tokens** — colors only. Other foundations are separate skills.
+- **Typography, motion, spacing tokens** — colors only. Use the matching references in `tegel-ui-skills` for other foundations.
 - **Brand fonts** — *Scania Sans*, *TRATON Type Display*, etc. are not bundled. Token references include system fallbacks.
-- **Web components** — to use the `<tds-*>` components, install `@scania/tegel` separately. This skill works with or without them.
+- **Web components** — to use the `<tds-*>` components, install `@scania/tegel` separately. This reference works with or without them.
 
-If the user asks for typography, motion, or component help, say so and stop — don't guess at the right values.
+If the user asks for typography, motion, or component help, load the matching reference instead of guessing at the right values.
 
 ## Namespace note for projects that also use `@scania/tegel-lite`
 
-`@scania/tegel-lite` exposes a parallel namespace (`--color-foreground-text-*`, `--color-foreground-border-*`, `--color-foreground-icon-*`, plus `--color-background-surface-*`). The `--color-text-*` / `--color-border-*` / `--color-icon-*` names in **this** skill are different tokens — they will not silently shadow the tegel-lite ones, but they also won't pick up tegel-lite's brand wiring.
+`@scania/tegel-lite` exposes a parallel namespace (`--color-foreground-text-*`, `--color-foreground-border-*`, `--color-foreground-icon-*`, plus `--color-background-surface-*`). The `--color-text-*` / `--color-border-*` / `--color-icon-*` names in **this** reference are different tokens; they will not silently shadow the tegel-lite ones, but they also won't pick up tegel-lite's brand wiring.
 
-In a project that already has `@scania/tegel-lite` set up, prefer that package's namespace and treat this skill as supplementary. Only reach for this skill's tokens (and CSS file) when the project is *not* using tegel-lite — for example, a standalone landing page or a tool that wants Tegel colors without the rest of the system.
+In a project that already has `@scania/tegel-lite` set up, prefer that package's namespace and treat this reference as supplementary. Only reach for these tokens (and CSS file) when the project is *not* using tegel-lite, for example a standalone landing page or a tool that wants Tegel colors without the rest of the system.
 
 ## Compatibility
 
@@ -148,11 +150,11 @@ Plain CSS custom properties. Works in every evergreen browser, every framework (
 
 ## Installation summary for the agent
 
-When invoked in a fresh project, the typical flow is:
+When used in a fresh project, the typical flow is:
 
 1. Confirm the project has not already adopted Tegel (search for `tegel-colors.css`, `@scania/tegel`, `tegel-styles`).
 2. Ask the user where to place the CSS file (suggest `src/styles/tegel-colors.css` or framework-equivalent).
-3. Read the sibling file [`tegel-colors.css`](./tegel-colors.css) and write it to that location verbatim.
+3. Copy `assets/tegel-colors.css` from this skill folder to that location verbatim.
 4. Add the import to the project's root entry file.
 5. Confirm the default theme (Scania, light) renders, then offer to wire up a brand/mode toggle if requested.
 

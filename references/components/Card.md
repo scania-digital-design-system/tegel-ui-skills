@@ -2,6 +2,8 @@
 
 A surface for grouped content. Compound — sub-elements are children of `tl-card__body`. Theme-aware via mode-variant primary/secondary.
 
+In Figma with the multibrand TRATON Component Library, use the official Card component instance. Scania cards keep their official white light-mode background; do not replace cards with local frames and do not manually change their fills. If a surrounding block/canvas is grey 50, keep the Card instance official and use the appropriate library mode variant for the surrounding component context instead of recolouring the card.
+
 **Root class:** `tl-card`
 **Compound:** yes
 **Theme-aware:** yes (variant follows `tds-mode-variant-{primary,secondary}` on body)

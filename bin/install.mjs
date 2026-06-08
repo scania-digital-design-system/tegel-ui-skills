@@ -12,8 +12,9 @@ import { createInterface } from 'node:readline/promises';
 import { argv, exit, stderr, stdin, stdout } from 'node:process';
 
 const SOURCE_ROOT = resolve(fileURLToPath(import.meta.url), '..', '..');
-const SOURCE_SKILLS_DIR = join(SOURCE_ROOT, 'skills');
-const TEMPLATE_AGENTS_PATH = join(SOURCE_ROOT, 'templates', 'AGENTS.md.tmpl');
+const SKILL_MD_PATH = join(SOURCE_ROOT, 'SKILL.md');
+// Files/dirs copied into .claude/skills/{name}/ — agents/ is Codex-only, not needed in Claude.
+const SKILL_INSTALL_ENTRIES = ['SKILL.md', 'references', 'assets'];
 
 const AGENTS_BEGIN = '<!-- BEGIN tegel-ui-skills -->';
 const AGENTS_END = '<!-- END tegel-ui-skills -->';
@@ -60,14 +61,11 @@ async function main() {
   const force = !!args.force;
   const check = !!args.check;
 
-  if (!existsSync(SOURCE_SKILLS_DIR)) {
-    throw new Error(`Source skills directory not found at ${SOURCE_SKILLS_DIR}. Is the package laid out correctly?`);
+  if (!existsSync(SKILL_MD_PATH)) {
+    throw new Error(`SKILL.md not found at ${SKILL_MD_PATH}. Is the package laid out correctly?`);
   }
 
-  const skills = await loadSkills(SOURCE_SKILLS_DIR);
-  if (skills.length === 0) {
-    throw new Error(`No skills found in ${SOURCE_SKILLS_DIR}.`);
-  }
+  const skill = await loadSkill(SOURCE_ROOT);
 
   const summary = {
     filesInstalled: 0,
@@ -81,12 +79,10 @@ async function main() {
   const ctx = { dest, force, check, summary, overwriteAll: force, skipAll: false };
 
   if (target === 'claude' || target === 'both') {
-    for (const skill of skills) {
-      await installSkillToClaude(skill, ctx);
-    }
+    await installSkillToClaude(skill, ctx);
   }
   if (target === 'codex' || target === 'both') {
-    await updateAgentsMd(skills, ctx);
+    await updateAgentsMd(skill, ctx);
   }
 
   printSummary(summary, { check, dest, target });
@@ -113,25 +109,10 @@ function parseArgs(argv) {
 
 // ---------- skill loading ----------
 
-async function loadSkills(skillsDir) {
-  const entries = await readdir(skillsDir, { withFileTypes: true });
-  const skills = [];
-  for (const entry of entries) {
-    if (!entry.isDirectory()) continue;
-    const skillName = entry.name;
-    const skillPath = join(skillsDir, skillName);
-    const skillMdPath = join(skillPath, 'SKILL.md');
-    if (!existsSync(skillMdPath)) continue;
-    const source = await readFile(skillMdPath, 'utf8');
-    const { description } = parseFrontmatter(source);
-    skills.push({
-      name: skillName,
-      path: skillPath,
-      description: description ?? '',
-    });
-  }
-  skills.sort((a, b) => a.name.localeCompare(b.name));
-  return skills;
+async function loadSkill(sourceRoot) {
+  const source = await readFile(join(sourceRoot, 'SKILL.md'), 'utf8');
+  const { name, description } = parseFrontmatter(source);
+  return { name: name ?? 'tegel-ui-skills', description: description ?? '', path: sourceRoot };
 }
 
 function parseFrontmatter(source) {
@@ -156,11 +137,19 @@ function parseFrontmatter(source) {
 
 async function installSkillToClaude(skill, ctx) {
   const destSkillDir = join(ctx.dest, '.claude', 'skills', skill.name);
-  const files = await walkFiles(skill.path);
-  for (const sourceFile of files) {
-    const relPath = relative(skill.path, sourceFile);
-    const destFile = join(destSkillDir, relPath);
-    await copyOne(sourceFile, destFile, skill.name, ctx);
+  for (const entry of SKILL_INSTALL_ENTRIES) {
+    const sourcePath = join(skill.path, entry);
+    if (!existsSync(sourcePath)) continue;
+    const info = await stat(sourcePath);
+    if (info.isDirectory()) {
+      const files = await walkFiles(sourcePath);
+      for (const file of files) {
+        const destFile = join(destSkillDir, relative(skill.path, file));
+        await copyOne(file, destFile, skill.name, ctx);
+      }
+    } else {
+      await copyOne(sourcePath, join(destSkillDir, entry), skill.name, ctx);
+    }
   }
 }
 
@@ -246,17 +235,14 @@ async function resolveConflict(destFile, ctx) {
 
 // ---------- codex / AGENTS.md ----------
 
-async function updateAgentsMd(skills, ctx) {
+async function updateAgentsMd(skill, ctx) {
   const agentsPath = join(ctx.dest, 'AGENTS.md');
-  const template = await readFile(TEMPLATE_AGENTS_PATH, 'utf8');
-  const block = renderAgentsBlock(skills);
-  const fullBody = template.replace('{{BLOCK}}', block);
+  const block = renderAgentsBlock(skill);
   let nextContent;
-  let status;
   let pastTense;
   let wouldForm;
   if (!existsSync(agentsPath)) {
-    nextContent = fullBody;
+    nextContent = block + '\n';
     pastTense = 'created';
     wouldForm = 'would create';
   } else {
@@ -290,23 +276,21 @@ async function updateAgentsMd(skills, ctx) {
   stdout.write(`  AGENTS.md: ${ctx.summary.agentsMd} at ${relative(ctx.dest, agentsPath)}\n`);
 }
 
-function renderAgentsBlock(skills) {
+function renderAgentsBlock(skill) {
+  const file = `.claude/skills/${skill.name}/SKILL.md`;
+  const desc = (skill.description || '').replace(/\|/g, '\\|').replace(/\s+/g, ' ').trim();
   const lines = [AGENTS_BEGIN, ''];
-  lines.push('## Tegel UI skills (managed — re-run the installer to refresh)');
+  lines.push('## Tegel UI skill (managed — re-run the installer to refresh)');
   lines.push('');
   lines.push(
-    'This project uses the Tegel design system (`@scania/tegel-lite`). The skill files below are the source of truth for Tegel UI work. **Before generating any Tegel UI, read the relevant skill file(s).** Start with `tegel/SKILL.md` to pick the component, then follow its 6-step chain.',
+    'This project uses the Scania/TRATON Tegel design system. The skill file below is the source of truth for Tegel UI work in code and Figma. **Before generating any Tegel UI, read the skill file** and follow its reference map to load only what the current task needs.',
   );
   lines.push('');
   lines.push('| Skill | When to use it | File |');
   lines.push('|---|---|---|');
-  for (const skill of skills) {
-    const file = `.claude/skills/${skill.name}/SKILL.md`;
-    const desc = (skill.description || '').replace(/\|/g, '\\|').replace(/\s+/g, ' ').trim();
-    lines.push(`| \`${skill.name}\` | ${desc || '(no description)'} | [\`${file}\`](${file}) |`);
-  }
+  lines.push(`| \`${skill.name}\` | ${desc || '(no description)'} | [\`${file}\`](${file}) |`);
   lines.push('');
-  lines.push('When the user asks to build, style, theme, or fix Tegel UI, read the relevant skill before writing code. If the agent generates Tegel UI that drifts from the design system and the user corrects it by hand, invoke `/tegel-skill-fix` (or read `.claude/skills/tegel-skill-fix/SKILL.md`) to propose an upstream skill edit.');
+  lines.push('When the user asks to build, style, theme, or fix Tegel UI (code or Figma), read the skill before writing. If the agent generates Tegel UI that drifts from the design system and the user corrects it by hand, read `references/improvement-loop.md` to update the skill.');
   lines.push('');
   lines.push(AGENTS_END);
   return lines.join('\n');
@@ -321,10 +305,10 @@ function printSummary(s, { check, dest, target }) {
   stdout.write(`  files updated:   ${s.filesUpdated}\n`);
   stdout.write(`  files unchanged: ${s.filesUnchanged}\n`);
   stdout.write(`  files skipped:   ${s.filesSkipped}\n`);
-  stdout.write(`  skills touched:  ${s.skillsTouched.size}\n`);
+  stdout.write(`  skill touched:   ${s.skillsTouched.size > 0 ? 'yes' : 'no'}\n`);
   stdout.write(`  AGENTS.md:       ${s.agentsMd}\n`);
   if (!check && (s.filesInstalled || s.filesUpdated || s.agentsMd !== 'unchanged')) {
-    stdout.write(`\nNext: open this project in Claude Code (skills auto-load from .claude/skills/) or in Codex (it reads AGENTS.md). Try: "/tegel Button" or "build me a Tegel header with a search field".\n`);
+    stdout.write(`\nNext: open this project in Claude Code (skill auto-loads from .claude/skills/) or in Codex (it reads AGENTS.md). Try: "build me a Tegel header with search and user menu".\n`);
   }
 }
 

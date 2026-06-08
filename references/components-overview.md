@@ -1,11 +1,11 @@
 ---
 name: tegel
-description: Use a Tegel Lite design system component. Invoke when the user asks to build UI with Tegel, references a Tegel component (Button, Card, Header, Table, etc.), or asks what classes/props a component accepts. Tegel Lite is a CSS-first design system (no JS runtime) — components are BEM-named classes (tl-{block}__{element}--{modifier}). Before writing any UI, READ the component reference at .claude/skills/tegel/components/{Name}.md for the exact root class, modifiers, sub-elements, states, and tokens.
+description: Use a Tegel Lite design system component. Read when the user asks to build UI with Tegel, references a Tegel component (Button, Card, Header, Table, etc.), or asks what classes/props a component accepts. Tegel Lite is a CSS-first design system (no JS runtime) — components are BEM-named classes (tl-{block}__{element}--{modifier}). Before writing any UI, read the component reference at references/components/{Name}.md for the exact root class, modifiers, sub-elements, states, and tokens.
 ---
 
 # tegel — Use a Tegel Lite design system component
 
-Use when the user asks to build UI with Tegel, references a Tegel component, or asks what classes/props a component accepts. Invoke as `/tegel ComponentName` (e.g. `/tegel Button`, `/tegel Card`).
+Use when the user asks to build UI with Tegel, references a Tegel component, or asks what classes/props a component accepts.
 
 ## What `@scania/tegel-lite` is
 
@@ -33,7 +33,7 @@ Both files (`scania-variables.css` *and* `traton-variables.css`) must be loaded 
 ## Steps when the user asks for a component
 
 1. **Identify the component** from the user's request or the slash-command argument.
-2. **Read the component doc** at `.claude/skills/tegel/components/{Name}.md`. It documents the root class, modifiers, sub-elements, states, and the tokens it consumes — all stack-agnostic.
+2. **Read the component doc** at `references/components/{Name}.md`. It documents the root class, modifiers, sub-elements, states, and the tokens it consumes — all stack-agnostic.
 3. **Check the source CSS file** if anything is unclear: `node_modules/@scania/tegel-lite/dist/tl-{name}.css`. The CSS is the source of truth.
 4. **Check existing usage** in the consuming project (if any) — there's almost always a stack-specific binding to follow (e.g. a React wrapper at `src/tegel-components/{Name}.tsx`). Match its conventions.
 5. **Write the markup** following these rules:
@@ -44,7 +44,7 @@ Both files (`scania-variables.css` *and* `traton-variables.css`) must be loaded 
 
 ## Token namespaces (read first if unfamiliar)
 
-`@scania/tegel-lite` has its own naming. The companion `tegel-colors` skill describes a parallel `--color-text-*` / `--color-border-*` namespace that **does not exist** in this package — token references silently fall back if you use those names. Use:
+`@scania/tegel-lite` has its own naming. The colors reference also documents a standalone `--color-text-*` / `--color-border-*` namespace that **does not exist** in this package — token references silently fall back if you use those names. Use:
 
 | Group | Tegel Lite token prefix |
 |---|---|
@@ -55,10 +55,10 @@ Both files (`scania-variables.css` *and* `traton-variables.css`) must be loaded 
 | System (status) | `--color-system-{info,success,warning,danger}-{strong,defined,default,subtle,discrete}` — same as the colors skill |
 | Spacing | `--tds-spacing-{layout,element}-*` |
 | Radius | `--radius-{narrow,soft,rounded,circle,surface-clickable,surface-field,area-large,area-small}` |
-| Typography | `--{level}-font-{family,size,weight,line-height,letter-spacing,text-transform}` where level is `super-type-01..03`, `expressive-headline-01..02`, `headline-01..07`, `paragraph-01..02`, `body-01..02`, `body-link-01..02`, `detail-01..07` |
+| Typography | For custom text outside components, follow `references/typography.md` and current Inferno names (`display`, `headline`, `paragraph`, `body`, `body-link`, `title`, `label`, `text`). Component docs may mention older Tegel Lite package variables; preserve those only when reading existing component CSS, and do not use them as new hierarchy choices. |
 | Motion | `--tds-motion-duration-*` and `--tds-motion-easing-*` |
 
-See `tegel-lite-setup` for the full mapping table and the cascade-order rules that govern overriding any of these.
+See `references/setup.md` for the full mapping table and the cascade-order rules that govern overriding any of these.
 
 ## Component catalogue
 
@@ -67,23 +67,23 @@ See `tegel-lite-setup` for the full mapping table and the cascade-order rules th
 **Layout / Navigation:** Header, Footer, SideMenu, Breadcrumbs, Tabs, Stepper, Divider, Block
 **Data Display:** Card, Table, Accordion, Badge, Chip, Icon, Link
 
-## Skill orchestration — what to consult next
+## Reference orchestration — what to consult next
 
-This skill is step **1 of 6** in the Tegel UI build chain. After picking the component(s) here, walk the rest in order. Skip a step only if it doesn't apply — never invert the order.
+This reference is step **1 of 6** in the Tegel UI build chain. After picking the component(s) here, walk the rest in order. Skip a step only if it doesn't apply.
 
-| Step | Skill | Purpose |
+| Step | Reference | Purpose |
 |---|---|---|
-| 1 | **tegel** (here) | Pick the component, read `components/{Name}.md` |
-| 2 | [`tegel-layout`](../tegel-layout/SKILL.md) | Page-level placement: grid, columns, macro spacing |
-| 3 | [`tegel-spacing`](../tegel-spacing/SKILL.md) | Micro padding/margin/gap inside and between components |
-| 4 | [`tegel-typography`](../tegel-typography/SKILL.md) | Text hierarchy and styles |
-| 5 | [`tegel-colors`](../tegel-colors/SKILL.md) | Semantic color tokens, brand/mode |
-| 6 | [`tegel-motion`](../tegel-motion/SKILL.md) | Transitions and animations |
+| 1 | `references/components-overview.md` | Pick the component, read `references/components/{Name}.md` |
+| 2 | Project layout conventions | Page-level placement: grid, columns, macro spacing |
+| 3 | `references/spacing.md` | Micro padding/margin/gap inside and between components |
+| 4 | `references/typography.md` | Text hierarchy, type scale, font combinations, and text color rules |
+| 5 | `references/colors.md` and `references/setup.md` | Semantic color tokens, brand/mode |
+| 6 | `references/motion.md` | Transitions and animations |
 
-**Sidecar skills (consult only when relevant):**
+**Sidecar references (consult only when relevant):**
 
-- [`tegel-lite-setup`](../tegel-lite-setup/SKILL.md) — read first when adopting Tegel in a new project, or when debugging "why does this look broken?" symptoms. Covers installation, the `<link>`-tag CSS loading pattern, the brand/mode class structure, and every integration gotcha.
-- [`tegel-form-layout`](../tegel-form-layout/SKILL.md) — read only when laying out form components in a row (TextField + Dropdown), or when sm/md outside-label sizing fights you.
-- [`components/{Name}`](components/) — per-component CSS reference (root class, markup, modifiers, sub-elements, states, tokens, examples).
+- `references/setup.md` — read first when adopting Tegel in a new project, or when debugging "why does this look broken?" symptoms. Covers installation, the `<link>`-tag CSS loading pattern, the brand/mode class structure, and every integration gotcha.
+- `references/form-layout.md` — read only when laying out form components in a row (TextField + Dropdown), or when sm/md outside-label sizing fights you.
+- `references/components/{Name}.md` — per-component CSS reference (root class, markup, modifiers, sub-elements, states, tokens, examples).
 
-> **Token namespace note:** the `tegel-colors` skill describes a `--color-text-*` / `--color-border-*` namespace that **does not exist** in `@scania/tegel-lite`. Use the table above (`--color-foreground-text-*`, `--color-foreground-border-*`) — `tegel-lite-setup` documents the full divergence.
+> **Token namespace note:** `references/colors.md` includes a `--color-text-*` / `--color-border-*` namespace for the standalone color CSS. That namespace **does not exist** in `@scania/tegel-lite`. Use the table above (`--color-foreground-text-*`, `--color-foreground-border-*`) for Tegel Lite package work; `references/setup.md` documents the full divergence.

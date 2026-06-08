@@ -7,7 +7,7 @@ description: Reference for Tegel design system spacing tokens — the layout sca
 
 ## Setup (one-time, per project)
 
-The current `@scania/tegel-lite` beta ships brand-namespaced units (`--scania-unit-*`, `--traton-unit-*`) but **does not** define the un-namespaced `--unit-*` tokens that this skill — and Tegel's own `--space-*` / `--radius-*` definitions — reference. Without the shim below, `var(--unit-8)` resolves to nothing and any element sized with it collapses.
+The current `@scania/tegel-lite` beta ships brand-namespaced units (`--scania-unit-*`, `--traton-unit-*`) but **does not** define the un-namespaced `--unit-*` tokens that this reference — and Tegel's own `--space-*` / `--radius-*` definitions — uses. Without the shim below, `var(--unit-8)` resolves to nothing and any element sized with it collapses.
 
 Drop this block once at the project's CSS root (e.g. `app/styles/site.css` or `src/styles/tokens.css`). It re-exports the active brand's units under the un-namespaced names the rest of the skill assumes:
 

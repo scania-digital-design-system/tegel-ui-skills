@@ -1,13 +1,13 @@
 ---
 name: tegel-lite-setup
-description: Install, integrate, and avoid the gotchas of @scania/tegel-lite. Use when adopting tegel-lite in a new project, debugging "why does this look broken?" symptoms, or porting Tegel-Lite conventions. Covers the <link>-tag CSS loading pattern (bundlers like Lightning CSS / Turbopack reject the package's CSS), the copy-tegel.mjs script, the brand/mode class structure, the six CSS files missing from components.css, and the token-namespace divergence vs the tegel-colors skill.
+description: Install, integrate, and avoid the gotchas of @scania/tegel-lite. Use when adopting tegel-lite in a new project, debugging "why does this look broken?" symptoms, or porting Tegel-Lite conventions. Covers the <link>-tag CSS loading pattern (bundlers like Lightning CSS / Turbopack reject the package's CSS), the copy-tegel.mjs script, the brand/mode class structure, the six CSS files missing from components.css, and the token-namespace divergence vs the standalone colors reference.
 ---
 
 # tegel-lite-setup — Install, integrate, and avoid the gotchas
 
 Use when adopting `@scania/tegel-lite` in a new project, debugging a "why does this look broken?" symptom, or porting Tegel-Lite conventions into another codebase. Stack-agnostic — every section that touches a framework calls out its assumption explicitly and points to the equivalent for plain HTML / Vue / Svelte / Astro.
 
-This skill assumes the design tokens, type scale, layout grid, and motion tokens described in the `tegel-colors`, `tegel-typography`, `tegel-layout`, and `tegel-motion` skills — but flags one important divergence in the colours mapping (see "Token namespace").
+This reference assumes the design tokens, type scale, layout grid, and motion tokens described across this skill's references, but flags one important divergence in the colors mapping (see "Token namespace").
 
 ---
 
@@ -17,7 +17,7 @@ Most surprises on this stack come from one of these. Internalise them before tro
 
 1. **CSS is loaded via `<link>` tags, not via a JS / bundler import.** Several bundlers (Lightning CSS, Turbopack, esbuild's CSS pipeline) reject the SVG `url()` in `scania-variables.css` and `var(--name with space)` references in `global.css`. The browser's CSS parser is happy with both. Always copy the dist files to a static directory and load with raw `<link>` tags.
 2. **The bundle (`components.css`) is incomplete.** Six per-element files are *not* concatenated into it: `tl-folder-tab.css`, `tl-inline-tab.css`, `tl-navigation-tab.css`, `tl-step.css`, `tl-checkbox-vars.css`, `tl-textarea-mixins.css`. Without those files, tabs/steppers render as native unstyled buttons. Either link them individually or run a copy script that appends them to `components.css` (recipe below).
-3. **Token namespace differs from the `tegel-colors` skill.** Tegel Lite uses `--color-foreground-text-*` / `--color-foreground-border-*` / `--color-foreground-icon-*`. The colors skill describes parallel `--color-text-*` / `--color-border-*` / `--color-icon-*` names — those don't exist in Lite and references silently fall back to inherited / browser default colour. Background tokens (`--color-background-*`) and system tokens (`--color-system-*`) are on the same namespace as the colors skill.
+3. **Token namespace differs from the standalone colors reference.** Tegel Lite uses `--color-foreground-text-*` / `--color-foreground-border-*` / `--color-foreground-icon-*`. The colors reference describes parallel `--color-text-*` / `--color-border-*` / `--color-icon-*` names — those do not exist in Lite and references silently fall back to inherited or browser default color. Background tokens (`--color-background-*`) and system tokens (`--color-system-*`) are on the same namespace as the colors reference.
 4. **Tegel hard-codes a Scania font on `body`.** `global.css` sets `body { font-family: "Scania Sans Semi Condensed", ... }` literally — it does not switch when you toggle to Traton. Override with the brand-aware `--body-01-font-family` token using a higher-specificity selector (recipe below).
 5. **Brand classes go on `<html>`, mode classes go on `<body>`.** Tegel's selectors expect this exact split — the cascade is `.traton .tds-mode-dark` (descendant combinator), not `.traton.tds-mode-dark` (compound).
 6. **`--tds-z-index-header` is referenced but never defined.** Tegel uses it for header sub-elements (dropdowns, popovers) but ships no default. Set it once or those elements stack inconsistently.
@@ -141,7 +141,7 @@ Persist with `localStorage` if you want preference to survive reloads.
 
 ## 4 / Token namespace mapping
 
-The `tegel-colors` skill names tokens like `--color-text-base`, `--color-border-discrete`, `--color-text-brand`. **`@scania/tegel-lite` does not define those.** Every reference silently falls back, which manifests as black-on-black text in dark mode.
+The standalone colors reference names tokens like `--color-text-base`, `--color-border-discrete`, `--color-text-brand`. **`@scania/tegel-lite` does not define those.** Every reference silently falls back, which manifests as black-on-black text in dark mode.
 
 | Use this in Tegel Lite | Not this |
 |---|---|
@@ -277,7 +277,7 @@ Many bundlers inject project CSS *before* the link-tagged Tegel files in the ren
 
 1. **Use a higher-specificity selector** — `html body`, `.tl-card__body .tl-card__content`, `.scope > .tl-…`. Specificity always beats order, regardless of injection.
 2. **Scope by adding a project class** — `.site-shell--menu-closed > .tl-side-menu { ... }`. Same effect, often more semantic.
-3. **`!important`** — last resort. None of the patterns in this skill need it.
+3. **`!important`** — last resort. None of the patterns in this reference need it.
 
 Don't try to fix this by reordering imports unless your bundler exposes a stable mechanism. In practice it's whack-a-mole.
 
@@ -342,7 +342,7 @@ When the site "doesn't look right," run through these in order:
 | Brand class not theming descendants | Brand class on body instead of html. Tegel's selector is `.traton .tds-mode-dark` (descendant). |
 | Override appears in DevTools but is crossed out | Same-specificity CSS load order — bump specificity (`html body`, parent selector chain). |
 | Toggle off-state invisible on a dark surface | Retune `--toggle-background-off` to the `inverse-*` token in that scope. |
-| Header dropdown rows look unstyled (no padding / no hover / wrong height) | `tl-header__dropdown-menu-item` is a **wrapper**, not the link. Put the class on a `<div>` and nest `<a>` or `<button>` inside — Tegel's row CSS targets `.tl-header__dropdown-menu-item a` / `… button`, not the menu-item itself. See the Header skill's "Dropdown panel (canonical structure)" example. |
+| Header dropdown rows look unstyled (no padding / no hover / wrong height) | `tl-header__dropdown-menu-item` is a **wrapper**, not the link. Put the class on a `<div>` and nest `<a>` or `<button>` inside — Tegel's row CSS targets `.tl-header__dropdown-menu-item a` / `… button`, not the menu-item itself. See the Header component reference's "Dropdown panel (canonical structure)" example. |
 | Header dropdown chevron snaps instead of animating on open | Chevron icon is missing the base `tl-header__dropdown-icon` class. The transition lives there; `--rotated` only sets the angle. Add both: `class="tl-header__dropdown-icon tl-icon tl-icon--chevron_down tl-icon--16"`, then toggle `--rotated`. |
 
 ---
@@ -352,9 +352,9 @@ When the site "doesn't look right," run through these in order:
 These docs treat Tegel Lite as pure CSS. Bindings are your call:
 
 - **Plain HTML**: ship the markup directly. No build step needed beyond the copy script.
-- **React** (the boilerplate this skill ships with): wrap each component in a thin `.tsx` that builds the class string from props. See `src/tegel-components/` for ready-made wrappers.
+- **React**: wrap each component in a thin `.tsx` that builds the class string from props. If the project already has wrappers under `src/tegel-components/`, follow those conventions.
 - **Vue / Svelte**: ditto — a `<script setup>` or `<script>` block with class-string composition.
 - **Astro / Hugo / Jekyll**: server-rendered, same HTML; the only stack concern is loading the four CSS files in your layout template.
-- **Web components**: Scania ships `@scania/tegel` (the full version with `<tds-*>` web components). This skill is for *Lite* (CSS-only); if you're using `@scania/tegel`, refer to its own docs.
+- **Web components**: Scania ships `@scania/tegel` (the full version with `<tds-*>` web components). This reference is for *Lite* (CSS-only); if you're using `@scania/tegel`, refer to its own docs.
 
-The component skill docs (`tegel-components/{Name}.md`) are written stack-agnostic — markup + classes + states. If your project ships React wrappers (or any other binding), the docs note where to find them.
+The component reference docs (`references/components/{Name}.md`) are written stack-agnostic — markup + classes + states. If your project ships React wrappers (or any other binding), follow the local wrapper conventions.

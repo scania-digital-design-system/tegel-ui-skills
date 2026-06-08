@@ -1,0 +1,4 @@
+interface:
+  display_name: "Tegel UI Skills"
+  short_description: "Build Tegel Lite and TRATON Figma UI"
+  default_prompt: "Use $tegel-ui-skills to build a Scania or Traton interface with Tegel Lite or the TRATON Component Library."
