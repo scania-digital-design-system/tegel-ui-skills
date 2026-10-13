@@ -3,10 +3,9 @@ name: tegel-aesthetic
 description: Set the aesthetic direction BEFORE building Tegel UI. Use at the
   start of any new screen, page, or section — or any restyle, relayout, or
   "make it look more X / modern / editorial" change to an existing one. First
-  decide the register —
-  Expressive (storytelling, landing, communicative surfaces) or Functional
-  (guidelines, tools, dashboards, AI service UI) — then tune space, type,
-  color, motion, and composition to it. Directional, not prohibitive: it
+  decide the register — Expressive (storytelling, landing, communicative surfaces) 
+  or Functional (guidelines, tools, dashboards, AI service UI) — then tune space, 
+  type, color, motion, and composition to it. Directional, not prohibitive — it
   pushes the Scania aesthetic. The foundation skills (colors, spacing, motion)
   still enforce the rules; this decides which way to push within them.
 ---
