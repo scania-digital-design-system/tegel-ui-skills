@@ -181,7 +181,7 @@ For communicative surfaces. The goal is impact through restraint.
   including the single display headline a Functional page is allowed: give that
   one room even though the rest of that page runs tight.
 - **Commit to contrast and brand presence** using semantic surface tokens
-  (`--color-background-base` / `-inverse-*`, `--color-foreground-text-strong`).
+  (`--color-background-base` / `-inverse-*`, `--color-text-strong`).
   *Why:* committed contrast reads as deliberate; timid mid-greys read as
   unfinished. Keep it mode-agnostic — commit via tokens that flip, not via a
   hand-picked dark panel.
@@ -215,7 +215,7 @@ premium.
   *small*: a card or section title sits roughly one step above its body — a
   small `--type-headline-*`, or even a strong/large `--type-body-*` — never a dramatic jump to
   a large headline. Let weight and color
-  (`--color-foreground-text-strong` for the title vs `-soft` / `-defined` for
+  (`--color-text-strong` for the title vs `-soft` / `-defined` for
   copy) carry the hierarchy. *Why:* a large title-to-body size jump is an
   Expressive device — on a dense, scannable surface it shouts, wastes vertical
   space, and fractures the calm. A title close in size to its copy still reads
