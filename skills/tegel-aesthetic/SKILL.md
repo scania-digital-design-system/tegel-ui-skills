@@ -161,18 +161,18 @@ For communicative surfaces. The goal is impact through restraint.
 - **Spend space generously — one idea per viewport.** Let a single statement own
   the screen. *Why:* room around an element is what makes it read as important;
   crowding it makes everything average.
-- **Let type be the hero.** Reach into `super-type-*` / `expressive-headline-*`,
+- **Let type be the hero.** Reach into the display sizes (`--type-display-*`),
   with a decisive jump from headline to body. *Why:* Scania expresses confidence
   through typographic scale, not ornament — a large, quiet line says more than a
   decorated small one.
-- **Hold the type to about three sizes.** One hero (`super-type-*` /
-  `expressive-headline-*`), one supporting (`headline-*`), one for body. *Why:* a
+- **Hold the type to about three sizes.** One hero (`--type-display-*`), one
+  supporting (`--type-headline-*`), one for body. *Why:* a
   tight size set reads as composed and deliberate; every extra size is a small
   crack that makes the page feel messy. Resist adding a fourth "just for this
   one element."
 - **A large display-font title demands the space around it.** Whenever a title
-  is set in the display font at hero scale (`super-type-*` /
-  `expressive-headline-*`), surround it with generous whitespace — `layout`-scale
+  is set in the display font at hero scale (`--type-display-*`),
+  surround it with generous whitespace — `layout`-scale
   margins above and below (`--tds-spacing-layout-*`), never the tight `element`
   steps. The bigger the type, the more air it needs. *Why:* large display type is
   a statement; crammed against neighbouring content it reads as cramped and loud
@@ -213,7 +213,7 @@ premium.
 - **Keep the type spread discrete — separate by weight and color, not size.** On
   functional surfaces the step from a title to the copy beneath it should be
   *small*: a card or section title sits roughly one step above its body — a
-  small `headline-*`, or even a strong/large `body-*` — never a dramatic jump to
+  small `--type-headline-*`, or even a strong/large `--type-body-*` — never a dramatic jump to
   a large headline. Let weight and color
   (`--color-foreground-text-strong` for the title vs `-soft` / `-defined` for
   copy) carry the hierarchy. *Why:* a large title-to-body size jump is an
@@ -232,8 +232,8 @@ premium.
 - **A wider type range is allowed here — keep it on the scale.** The
   ~three-size discipline that keeps an Expressive screen clean is impractical in
   dense tooling (tables, forms, detail views legitimately need more steps).
-  That's expected — but pull every size from the working scale (`headline-*`,
-  `paragraph-*`, `body-*`, `detail-*`) and reuse the same steps consistently
+  That's expected — but pull every size from the working scale (`--type-headline-*`,
+  `--type-paragraph-*`, `--type-body-*`, `--type-system-*`) and reuse the same steps consistently
   rather than inventing in-betweens. *Why:* in a functional surface, consistency
   of scale matters more than count; what looks messy is arbitrary sizes, not
   many of them.
@@ -263,6 +263,10 @@ conflict — when in doubt, the foundation skill wins on specifics:
   `tegel-colors`, `tegel-spacing`, `tegel-motion`, `tegel-lite-setup`.
 - This skill only ever tells you *which* tokens to lean on and *how much* — not
   to invent new ones. Inventing is still forbidden.
+- Type tokens (`--type-*`) hold plain numbers, so wrap sizes in `calc()`:
+  `calc(var(--type-display-01-font-size) * 1px)`. The older names
+  (`super-type-*`, `expressive-headline-*`, `detail-*`, `--tds-headline-*`)
+  still ship for backwards compatibility only — don't use them.
 
 ## Before you call it done — render and verify in both modes
 
@@ -288,9 +292,9 @@ pass every time:
    class selectors win, but only for the properties they actually declare.)
 4. **Count display-font headlines.** Exactly one per page — the H1 in the
    Scania Headline face (Expressive: ≤ one hero per viewport). Any section or
-   card title set in the Headline display font (`--font-display` /
-   `--tds-headline-01`) is a bug — those use the sentence-case working scale
-   (`--tds-headline-02` and below). Grep your styles for the display font and
+   card title set in the Headline display font (`--type-display-*-font-family`
+   or `--type-headline-01-*`) is a bug — those use the sentence-case working
+   scale (`--type-headline-02-*` and below). Grep your styles for the display font and
    confirm it appears once.
 5. **Scan for kickers and section numbers.** No number, step counter, kicker,
    or tag parked above a heading — decorative section indices ('01', '02')
