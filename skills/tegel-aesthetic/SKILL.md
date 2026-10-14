@@ -33,8 +33,11 @@ generic generated UI.
 
 1. **Align everything to a real grid.** Precision is a core Scania principle.
    Shared edges, consistent gutters, a visible underlying structure. Use the
-   `.tds-grid-*` columns; don't free-float elements. If two things don't need to
-   align, question whether one of them belongs on the page.
+   Tegel grid: `.tds-grid-container` with `.tds-grid-fluid` or
+   `.tds-grid-fixed`, placing items with CSS grid column spans (`.tds-row` /
+   `.tds-col-*` are deprecated). Tegel Lite 1.x doesn't ship the grid CSS, so
+   load it from `@scania/tegel`. Don't free-float elements. If two things don't
+   need to align, question whether one of them belongs on the page.
 2. **Compose in simple fractions.** Blocks are full / half / third / quarter
    width. Pick a division and commit — never a bespoke 37% column. Simple
    divisions read as engineered; arbitrary ones read as accidental.
@@ -107,9 +110,11 @@ for this recipe every time you'd otherwise draw a box:
    *increase the gap or step one surface up a layer* — never add a border.
 3. **Inset "wells" (bar tracks, empty heatmap cells, off-states, avatar
    grounds) must not reuse a background-layer token to sit on a card.** In light
-   mode several layers collapse to the same value (see `tegel-lite-setup` §
-   "Background layers are not all distinct"), so a `layer-03` well on a
-   `layer-01` card is invisible. Use a *relative* tint instead — a `color-mix`
+   mode, surfaces alternate between two values as they nest, and in dark mode
+   each level is a step lighter (see Tegel's elevation model on
+   tegel.scania.com/foundations/foundation-colors). So only neighbouring layers
+   are guaranteed to contrast: a `layer-03` well on a `layer-01` card is
+   invisible in light mode. Use a *relative* tint instead — a `color-mix`
    off the foreground — so it reads on any surface in any mode:
    `color-mix(in srgb, var(--color-text-strong) 7%, transparent)`.
 4. **Only if the layer step genuinely can't carry it** — and you've already
@@ -288,8 +293,8 @@ pass every time:
    by default. On a Functional surface, small working titles (section labels,
    card titles, the page greeting) must be sentence case — set
    `text-transform: none` on them explicitly; a class that doesn't set it loses
-   to Tegel's element rule and renders uppercase. (See the type-cascade gotcha:
-   class selectors win, but only for the properties they actually declare.)
+   to Tegel's element rule and renders uppercase. (A class selector beats
+   Tegel's element rule only for the properties it actually declares.)
 4. **Count display-font headlines.** Exactly one per page — the H1 in the
    Scania Headline face (Expressive: ≤ one hero per viewport). Any section or
    card title set in the Headline display font (`--type-display-*-font-family`
