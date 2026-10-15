@@ -60,8 +60,8 @@ There is no `--success` or `--warning` variant; for those use `Message` instead.
 
 - Surface: `--banner-background-default`, `--banner-background-info`, `--banner-background-error` (resolve to `--color-background-layer-01` and `--color-system-{info,danger}-discrete`)
 - Icon tint: `--banner-prefix-{default,info,error}`
-- Text: `--banner-text` → `--color-foreground-text-strong`
-- Close icon: `--banner-close-icon` → `--color-foreground-icon-strong`
+- Text: `--banner-text` → `--color-text-strong`
+- Close icon: `--banner-close-icon` → `--color-icon-strong`
 - Typography: `--headline-06-*` (header), `--detail-02-*` (subheader)
 - Focus: `--tds-focus-outline-color` on `.tl-banner__close:focus-visible`
 

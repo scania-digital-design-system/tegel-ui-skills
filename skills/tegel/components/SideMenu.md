@@ -107,7 +107,7 @@ A vertical navigation drawer. Behaves as a 272px persistent rail on desktop (≥
 
 - Surface: `--side-menu-background-cover` → `--color-background-base`
 - Hover / active / selected: `--side-menu-item-state-hover`, `--side-menu-item-state-active`, `--side-menu-item-state-selected`
-- Selected accent: `--side-menu-single-subitem-selected-border-color` → `--color-foreground-border-accent-focus`
+- Selected accent: `--side-menu-single-subitem-selected-border-color` → `--component--focus-ring-color-strong`
 - Bottom divider: `--side-menu-bottom-menu-border-top` → `--component-side-menu-color-divider`
 - Collapsed sizing: `--side-menu-collapsed-button-size` (68px Scania, 72px Traton)
 - Width: 272px persistent; collapsed = `--side-menu-collapsed-button-size`

@@ -61,8 +61,8 @@ State styling is applied via standard pseudo-classes — the CSS targets them di
 Variant-specific tokens (set per `tl-button--{variant}`):
 
 - `--color-background-accent-{primary|danger}-{default|hover|pressed|focus|disabled}`
-- `--color-foreground-text-strong`, `--color-foreground-text-disabled`
-- `--color-foreground-border-{soft|subtle|strong|discrete|accent-focus}`
+- `--color-text-strong`, `--color-text-disabled`
+- `--color-border-{soft|subtle|strong|discrete}`, `--component--focus-ring-color-strong`
 
 Typography: `--detail-02-*` (font family, size, line-height, weight, letter-spacing).
 Radius: `--dimension-radius-for-surface-clickable` (resolves to `--radius-surface-clickable` — pill-shaped under Traton, rounded under Scania).

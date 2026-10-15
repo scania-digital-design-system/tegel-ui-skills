@@ -52,7 +52,7 @@ The 4 cardinal `--top` / `--bottom` / `--left` / `--right` placements (without `
 
 ## Tokens consumed
 
-- Text: `--tooltip-text` → `--color-foreground-text-inverse-strong`
+- Text: `--tooltip-text` → `--color-text-inverse-strong`
 - Surface: `--tooltip-background` → `--color-background-inverse-layer-03`
 - Typography: `--detail-05-*`
 - Line height: `--tl-tooltip-line-height` (17px Scania, 16px Traton)
