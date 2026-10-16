@@ -49,9 +49,9 @@ Both files (`scania-variables.css` *and* `traton-variables.css`) must be loaded 
 | Group | Tegel Lite token prefix |
 |---|---|
 | Backgrounds | `--color-background-*` (`base`, `layer-01..03`, `surface-100..1000`, `top`, `overlay`, `none`, `inverse-*`) |
-| Text | `--color-foreground-text-*` (`strong`, `defined`, `soft`, `subtle`, `disabled`, `discrete`, `brand`, `inverse-*`) |
-| Borders | `--color-foreground-border-*` (`strong`, `defined`, `soft`, `subtle`, `disabled`, `discrete`, `inverse-*`, `accent-focus`, `accent-link`) |
-| Icons | `--color-foreground-icon-*` (mirrors text scale) |
+| Text | `--color-text-*` (`strong`, `defined`, `soft`, `subtle`, `disabled`, `discrete`, `brand`, `inverse-*`) |
+| Borders | `--color-border-*` (`strong`, `defined`, `soft`, `subtle`, `disabled`, `discrete`, `none`, `inverse-*`). Focus outlines use `--component--focus-ring-color-strong` |
+| Icons | `--color-icon-*` (mirrors text scale) |
 | System (status) | `--color-system-{info,success,warning,danger}-{strong,defined,default,subtle,discrete}` — same as the colors skill |
 | Spacing | `--tds-spacing-{layout,element}-*` |
 | Radius | `--radius-{narrow,soft,rounded,circle,surface-clickable,surface-field,area-large,area-small}` |
@@ -86,4 +86,4 @@ This skill is step **1 of 6** in the Tegel UI build chain. After picking the com
 - [`tegel-form-layout`](../tegel-form-layout/SKILL.md) — read only when laying out form components in a row (TextField + Dropdown), or when sm/md outside-label sizing fights you.
 - [`components/{Name}`](components/) — per-component CSS reference (root class, markup, modifiers, sub-elements, states, tokens, examples).
 
-> **Token namespace note:** the `tegel-colors` skill describes a `--color-text-*` / `--color-border-*` namespace that **does not exist** in `@scania/tegel-lite`. Use the table above (`--color-foreground-text-*`, `--color-foreground-border-*`) — `tegel-lite-setup` documents the full divergence.
+> **Token namespace note:** Tegel Lite 1.x and the `tegel-colors` skill use the same `--color-text-*` / `--color-border-*` / `--color-icon-*` names. The older `--color-foreground-*` names only existed in Tegel Lite 0.1.0 — `tegel-lite-setup` lists the renames.

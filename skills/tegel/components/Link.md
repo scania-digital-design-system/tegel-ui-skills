@@ -59,11 +59,12 @@ There is **no** size variant. There is no left-icon variant — the icon slot on
 
 ## Tokens consumed
 
-- `--color-foreground-text-accent-default` → `--link`
-- `--color-foreground-text-accent-default` → `--link-hover` (intentionally same as default)
-- `--color-foreground-text-accent-visited` → `--link-visited`
-- `--color-foreground-text-disabled` → `--link-disabled`
-- `--color-foreground-border-accent-focus` → `--link-focus-outline-color`
+- `--component-link-text-accent-default` → `--link`
+- `--component-link-text-accent-hover` → `--link-hover`
+- `--component-link-text-accent-visited` → `--link-visited`
+- `--component-link-opacity-disabled` → `--link-opacity-disabled` (disabled links fade with opacity rather than a colour)
+- `--color-system-info-default` → `--link-focus-outline-color`
+- Standard and inverse variants map `--link`, `--link-hover` and `--link-visited` to `--color-text-strong` / `--color-text-inverse-strong`
 - `--link-focus-outline-width` — 2px Scania / 4px Traton (set by brand class)
 - Typography (when `--standalone`): `--detail-02-*`
 

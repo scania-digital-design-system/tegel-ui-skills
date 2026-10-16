@@ -73,11 +73,11 @@ Items can include a leading or trailing icon — `gap: 10px` is built into `__it
 
 ## Tokens consumed
 
-- Text: `--popover-menu-text` → `--color-foreground-text-strong`
+- Text: `--popover-menu-text` → `--color-text-strong`
 - Background: `--popover-menu-background`, hover `--popover-menu-background-hover` (resolve to `--color-background-layer-{01,02}`)
-- Disabled text: `--popover-menu-item-disabled` → `--color-foreground-text-disabled`
-- Disabled icon: `--popover-menu-item-icon-disabled` → `--color-foreground-icon-disabled`
-- Focus outline: `--popover-menu-item-outline-focus` → `--color-foreground-border-accent-focus`
+- Disabled text: `--popover-menu-item-disabled` → `--color-text-disabled`
+- Disabled icon: `--popover-menu-item-icon-disabled` → `--color-icon-disabled`
+- Focus outline: `--popover-menu-item-outline-focus` → `--component--focus-ring-color-strong`
 - Shadow: `--popover-menu-box-shadow` (Scania only)
 - Typography: `--detail-02-*`
 - Motion: `--tds-motion-duration-fast-02`, `--tds-motion-easing-easy` (item hover transition)

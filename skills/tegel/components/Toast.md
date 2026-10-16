@@ -65,9 +65,9 @@ There are no built-in positioning modifiers — placement is your responsibility
 ## Tokens consumed
 
 - Surface: `--toast-background` → `--color-background-inverse-base`
-- Headline text: `--toast-headline` → `--color-foreground-text-inverse-strong`
-- Subheader text: `--toast-subheadline` → `--color-foreground-text-inverse-soft`
-- Close icon: `--toast-dismiss` → `--color-foreground-text-inverse-strong`
+- Headline text: `--toast-headline` → `--color-text-inverse-strong`
+- Subheader text: `--toast-subheadline` → `--color-text-inverse-soft`
+- Close icon: `--toast-dismiss` → `--color-text-inverse-strong`
 - Stripe + icon color per severity: `--toast-icon-{info,success,warning,error}` → `--color-system-{info,success,warning,danger}-default`
 - Typography: `--headline-07-*` (header), `--detail-02-*` (subheader)
 - Focus: `--tds-focus-outline-color` on `.tl-toast__close:focus-visible`

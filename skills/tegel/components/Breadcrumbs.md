@@ -35,9 +35,9 @@ Breadcrumbs has **no modifier classes**. Active-state is conveyed exclusively vi
 
 ## Tokens consumed
 
-- Text: `--breadcrumb-label` → `--color-foreground-text-strong`
-- Hover: `--breadcrumb-hover` → `--color-foreground-text-strong`
-- Current page: `--breadcrumb-current` → `--color-foreground-text-subtle`
+- Text: `--breadcrumb-label` → `--color-text-strong`
+- Hover: `--breadcrumb-hover` → `--color-text-strong`
+- Current page: `--breadcrumb-current` → `--color-text-subtle`
 - Separator: `--breadcrumb-separator-color`, `--breadcrumb-separator-margin` (4px), `--breadcrumb-separator-width` (4px), `--breadcrumb-separator-height` (8px)
 - Focus: `--breadcrumb-focus-outline-color`, `--breadcrumb-focus-outline-width`
 - Typography: `--detail-02-*` (font family, size, line-height, weight, letter-spacing)

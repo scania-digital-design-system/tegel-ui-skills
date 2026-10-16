@@ -74,8 +74,8 @@ There's also `tl-card__header--below` if you want the header *under* `.tl-card__
 ## Tokens consumed
 
 - `--color-background-layer-01` / `layer-02` (depending on variant) for surface
-- `--color-foreground-text-strong`, `--color-foreground-text-defined`, `--color-foreground-text-soft` for title / subtitle / body
-- `--color-foreground-border-discrete` for dividers
+- `--color-text-strong`, `--color-text-defined`, `--color-text-soft` for title / subtitle / body
+- `--color-border-discrete` for dividers
 - `--radius-area-large` for corner radius (8px Traton, 16px Scania)
 - `--card-body-padding`, `--card-slotted-padding` for internal spacing
 - `--detail-03-*` typography for body copy

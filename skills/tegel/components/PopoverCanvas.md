@@ -63,7 +63,7 @@ The root is `display: inline-block` with `visibility: hidden` until `--visible` 
 
 ## Tokens consumed
 
-- Text: `--popover-canvas-text` → `--color-foreground-text-strong`
+- Text: `--popover-canvas-text` → `--color-text-strong`
 - Surface: `--popover-canvas-background` → `--color-background-layer-01` or `--color-background-layer-02`
 - Shadow: `--popover-canvas-box-shadow` (Scania-only — Traton sets `none`)
 - Typography: `--body-01-*` (content), `--headline-05-*` (header)

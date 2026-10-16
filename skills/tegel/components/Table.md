@@ -129,8 +129,8 @@ A data table built on a real `<table>` element. Compound — header / body / foo
 
 - `--component-table-cell`, `--component-table-cell-hover`, `--component-table-secondary-cell`, `--component-table-pagination-base`, `--component-table-pagination-dropdown` — base surfaces
 - `--color-background-surface-{200,300,400}` — header / hover / selected surfaces
-- `--color-foreground-text-strong`, `--color-foreground-icon-strong`, `--color-foreground-icon-soft`, `--color-foreground-text-subtle` — text & icon
-- `--color-foreground-border-{discrete,accent-focus}` — dividers & focus outline
+- `--color-text-strong`, `--color-icon-strong`, `--color-icon-soft`, `--color-text-subtle` — text & icon
+- `--color-border-discrete`, `--component--focus-ring-color-strong` — dividers & focus outline
 - Typography: `--headline-07-*` (header & title), `--detail-02-*` (body cells, footer, inputs)
 - Spacing: `--tds-spacing-element-{4,8,16,24,32,48}`
 

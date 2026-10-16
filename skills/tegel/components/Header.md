@@ -192,9 +192,9 @@ The boilerplate places a Toggle inside a `tl-header__item-wrapper`. The off-stat
 .header-theme-toggle .tl-header__item-wrapper { cursor: default; padding: 0 var(--tds-spacing-element-16); }
 .header-theme-toggle .tl-header__item-wrapper:hover { background-color: var(--header-background); }
 .header-theme-toggle .tl-toggle {
-  --toggle-background-off: var(--color-foreground-icon-inverse-subtle);
-  --toggle-switch:         var(--color-foreground-text-inverse-strong);
-  --toggle-text:           var(--color-foreground-text-inverse-strong);
+  --toggle-background-off: var(--color-icon-inverse-subtle);
+  --toggle-switch:         var(--color-text-inverse-strong);
+  --toggle-text:           var(--color-text-inverse-strong);
 }
 ```
 

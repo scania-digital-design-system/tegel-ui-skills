@@ -67,7 +67,7 @@ Disabled is handled by the native `disabled` attribute on `<button>` — don't u
 
 - `--component-chip-color-default` / `--component-chip-color-selected` / `--component-chip-color-hover` / `--component-chip-color-hover-on-selected` / `--component-chip-color-focused` / `--component-chip-color-focused-on-selected` / `--component-chip-color-disabled`
 - `--component-chip-foreground-inverse`, `--component-chip-foreground-foreground-disabled-selected`
-- `--color-foreground-text-strong`, `--color-foreground-text-disabled`, `--color-foreground-border-accent-focus`
+- `--color-text-strong`, `--color-text-disabled`, `--component--focus-ring-color-strong`
 - `--component-chip-border-radius` — 16px on Scania, 2px on Traton
 - `--dimension-radius-focus-width`
 - Typography: `--detail-02-*`

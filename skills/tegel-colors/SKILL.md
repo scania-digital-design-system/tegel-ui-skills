@@ -138,9 +138,9 @@ If the user asks for typography, motion, or component help, say so and stop — 
 
 ## Namespace note for projects that also use `@scania/tegel-lite`
 
-`@scania/tegel-lite` exposes a parallel namespace (`--color-foreground-text-*`, `--color-foreground-border-*`, `--color-foreground-icon-*`, plus `--color-background-surface-*`). The `--color-text-*` / `--color-border-*` / `--color-icon-*` names in **this** skill are different tokens — they will not silently shadow the tegel-lite ones, but they also won't pick up tegel-lite's brand wiring.
+Since 1.0.0, `@scania/tegel-lite` defines the same `--color-text-*` / `--color-border-*` / `--color-icon-*` / `--color-background-*` names as this skill, with its own brand wiring. (Tegel Lite 0.1.0 used `--color-foreground-*` instead; `tegel-lite-setup` lists the renames.)
 
-In a project that already has `@scania/tegel-lite` set up, prefer that package's namespace and treat this skill as supplementary. Only reach for this skill's tokens (and CSS file) when the project is *not* using tegel-lite — for example, a standalone landing page or a tool that wants Tegel colors without the rest of the system.
+In a project that already has `@scania/tegel-lite` set up, use these names but load tegel-lite's CSS, not this skill's file. Only reach for this skill's CSS file when the project is *not* using tegel-lite — for example, a standalone landing page or a tool that wants Tegel colors without the rest of the system.
 
 ## Compatibility
 

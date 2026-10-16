@@ -82,7 +82,7 @@ Below 672px all sizes are 100% width. Below 320px, sm/md/lg also become full-hei
 
 - Surface: `--modal-background` → `--color-background-layer-02`
 - Backdrop: `--modal-backdrop` → `--color-background-overlay`
-- Text: `--modal-text` → `--color-foreground-text-strong`
+- Text: `--modal-text` → `--color-text-strong`
 - Shadow: `--modal-shadow` (composed from `--component-shadow-base-modifier`)
 - Scrollbar: `--tl-scrollbar-thumb-color`, `--tl-scrollbar-track-color`, `--tl-scrollbar-width`
 - Typography: `--headline-05-*` (title), `--body-01-*` (body)

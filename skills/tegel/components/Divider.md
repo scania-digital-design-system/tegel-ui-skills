@@ -4,7 +4,7 @@ A 1px-thick visual separator. Renders as an empty element styled as a hairline r
 
 **Root class:** `tl-divider`
 **Compound:** no
-**Theme-aware:** yes (resolves to `--color-foreground-border-*` which flips with light / dark mode)
+**Theme-aware:** yes (resolves to `--color-border-*` which flips with light / dark mode)
 **CSS file:** `tl-divider.css` (in `components.css` bundle)
 
 ## Markup
@@ -27,8 +27,8 @@ The element is intentionally empty — there are no children, no labels, no slot
 
 | Class | Effect |
 |---|---|
-| `tl-divider--discrete` | Subtle line — `--color-foreground-border-discrete`. Use between rows/list items. |
-| `tl-divider--expressive` | Stronger line — `--color-foreground-border-strong`. Use to separate page sections. |
+| `tl-divider--discrete` | Subtle line — `--color-border-discrete`. Use between rows/list items. |
+| `tl-divider--expressive` | Stronger line — `--color-border-strong`. Use to separate page sections. |
 
 ### Orientation (one required)
 
@@ -43,9 +43,9 @@ Divider is non-interactive. No hover/focus/active styling.
 
 ## Tokens consumed
 
-- `--divider-background` (default base) → `--color-foreground-border-discrete`
-- `--divider-background-discrete` → `--color-foreground-border-discrete`
-- `--divider-background-strong` → `--color-foreground-border-strong`
+- `--divider-background` (default base) → `--color-border-discrete`
+- `--divider-background-discrete` → `--color-border-discrete`
+- `--divider-background-strong` → `--color-border-strong`
 
 The orientation modifiers don't read tokens — they set fixed `width: 100%; height: 1px` (or vice versa).
 

@@ -79,10 +79,10 @@ The button class chooses which side the chevron sits on:
 
 ## Tokens consumed
 
-- `--color-foreground-border-discrete` — separators between items
-- `--color-foreground-border-strong` / `--color-foreground-border-accent-focus` — focus outline
-- `--color-foreground-text-strong`, `--color-foreground-text-disabled` — title/body text
-- `--color-foreground-icon-strong` — chevron color (via mask + `background-color`)
+- `--color-border-discrete` — separators between items
+- `--color-border-strong` / `--component--focus-ring-color-strong` — focus outline
+- `--color-text-strong`, `--color-text-disabled` — title/body text
+- `--color-icon-strong` — chevron color (via mask + `background-color`)
 - `--color-background-layer-01`, `--color-background-layer-02`, `--color-background-surface-100` — surface variants for hover / focus / expanded
 - Typography: `--headline-07-*` (title), `--detail-03-*` (panel)
 - Spacing: `--tds-spacing-element-{8,16,32}`, `--tds-spacing-layout-64`

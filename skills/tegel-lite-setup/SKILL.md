@@ -17,7 +17,7 @@ Most surprises on this stack come from one of these. Internalise them before tro
 
 1. **CSS is loaded via `<link>` tags, not via a JS / bundler import.** Several bundlers (Lightning CSS, Turbopack, esbuild's CSS pipeline) reject the SVG `url()` in `scania-variables.css` and `var(--name with space)` references in `global.css`. The browser's CSS parser is happy with both. Always copy the dist files to a static directory and load with raw `<link>` tags.
 2. **The bundle (`components.css`) is incomplete.** Six per-element files are *not* concatenated into it: `tl-folder-tab.css`, `tl-inline-tab.css`, `tl-navigation-tab.css`, `tl-step.css`, `tl-checkbox-vars.css`, `tl-textarea-mixins.css`. Without those files, tabs/steppers render as native unstyled buttons. Either link them individually or run a copy script that appends them to `components.css` (recipe below).
-3. **Token namespace differs from the `tegel-colors` skill.** Tegel Lite uses `--color-foreground-text-*` / `--color-foreground-border-*` / `--color-foreground-icon-*`. The colors skill describes parallel `--color-text-*` / `--color-border-*` / `--color-icon-*` names — those don't exist in Lite and references silently fall back to inherited / browser default colour. Background tokens (`--color-background-*`) and system tokens (`--color-system-*`) are on the same namespace as the colors skill.
+3. **Token names match the `tegel-colors` skill.** Since 1.0.0, Tegel Lite uses `--color-text-*` / `--color-border-*` / `--color-icon-*`, the same as the colors skill, along with `--color-background-*` and `--color-system-*`. The `--color-foreground-*` names only existed in 0.1.0 — if you find them in older code, rename them (see section 4); undefined names silently fall back to inherited or browser default colours.
 4. **Tegel hard-codes a Scania font on `body`.** `global.css` sets `body { font-family: "Scania Sans Semi Condensed", ... }` literally — it does not switch when you toggle to Traton. Override with the brand-aware `--body-01-font-family` token using a higher-specificity selector (recipe below).
 5. **Brand classes go on `<html>`, mode classes go on `<body>`.** Tegel's selectors expect this exact split — the cascade is `.traton .tds-mode-dark` (descendant combinator), not `.traton.tds-mode-dark` (compound).
 6. **`--tds-z-index-header` is referenced but never defined.** Tegel uses it for header sub-elements (dropdowns, popovers) but ships no default. Set it once or those elements stack inconsistently.
@@ -141,29 +141,21 @@ Persist with `localStorage` if you want preference to survive reloads.
 
 ## 4 / Token namespace mapping
 
-The `tegel-colors` skill names tokens like `--color-text-base`, `--color-border-discrete`, `--color-text-brand`. **`@scania/tegel-lite` does not define those.** Every reference silently falls back, which manifests as black-on-black text in dark mode.
+Since 1.0.0, Tegel Lite and the `tegel-colors` skill use the same token names. Tegel Lite 0.1.0 used a `--color-foreground-*` namespace instead, and those names are **not defined** in 1.x: any reference silently falls back, which shows up as black-on-black text in dark mode. If you find them in older code, rename them:
 
-| Use this in Tegel Lite | Not this |
+| Old name (Tegel Lite 0.1.0) | Current name (1.x) |
 |---|---|
-| `--color-foreground-text-strong` | `--color-text-base` / `--color-text-strong` |
-| `--color-foreground-text-defined` | `--color-text-defined` |
-| `--color-foreground-text-soft` | `--color-text-soft` |
-| `--color-foreground-text-subtle` | `--color-text-subtle` |
-| `--color-foreground-text-disabled` | `--color-text-disabled` |
-| `--color-foreground-text-discrete` | `--color-text-discrete` |
-| `--color-foreground-text-brand` | `--color-text-brand` |
-| `--color-foreground-text-inverse-strong` | `--color-text-inverse-base` / `inverse-strong` |
-| `--color-foreground-border-strong` | `--color-border-strong` |
-| `--color-foreground-border-defined` | `--color-border-defined` |
-| `--color-foreground-border-discrete` | `--color-border-discrete` |
-| `--color-foreground-border-soft` | `--color-border-soft` |
-| `--color-foreground-icon-subtle` | `--color-icon-subtle` |
-| `--color-foreground-icon-inverse-subtle` | `--color-icon-inverse-subtle` |
-| `--color-foreground-border-accent-focus` | (no equivalent in colors skill) |
+| `--color-foreground-text-*` | `--color-text-*` (`strong`, `defined`, `soft`, `subtle`, `disabled`, `discrete`, `brand`, `inverse-*`) |
+| `--color-foreground-border-*` | `--color-border-*` (`strong`, `defined`, `soft`, `subtle`, `disabled`, `discrete`, `none`, `inverse-*`) |
+| `--color-foreground-icon-*` | `--color-icon-*` (`strong`, `defined`, `soft`, `subtle`, `disabled`, `discrete`, `brand`, `inverse-*`) |
+| `--color-foreground-border-accent-focus` | `--component--focus-ring-color-strong` |
+| `--color-foreground-text-accent-default` / `-visited` | `--component-link-text-accent-default` / `-visited` |
 
-**Background and system tokens work as the colors skill documents** — no remapping needed:
+Note: Tegel Lite 1.8.0's own `tl-button.css` and `tl-datetime.css` (and the bundled `components.css`) still reference `--color-foreground-border-accent-focus`, which isn't defined, so their focus outline colour falls back.
 
-- `--color-background-{base, layer-01, layer-02, layer-03, surface-100..1000, top, overlay, none}` plus `inverse-*` variants
+**Background and system tokens:**
+
+- `--color-background-{base, layer-01, layer-02, layer-03, top, overlay, none}` plus `inverse-*` variants
 - `--color-system-{info, success, warning, danger}-{strong, defined, default, subtle, discrete}`
 
 ---
@@ -205,7 +197,7 @@ Elements that explicitly set their own `font-family` from a typography token (`v
  * default colour shows around the body. */
 body {
   background: var(--color-background-base);
-  color: var(--color-foreground-text-strong);
+  color: var(--color-text-strong);
   min-height: 100vh;
 }
 ```
@@ -302,13 +294,13 @@ To list the full set: `grep -oE "\.tl-icon--[a-z0-9_]+" node_modules/@scania/teg
 
 ## 11 / Toggle on dark surfaces
 
-Tegel's `Toggle` defaults the off-state slider to `--color-foreground-icon-subtle` — a transparent dark grey tuned for *light* surfaces. On a dark brand-coloured surface (e.g. inside the header), it blends in. Retune locally:
+Tegel's `Toggle` defaults the off-state slider to `--color-icon-subtle` — a transparent dark grey tuned for *light* surfaces. On a dark brand-coloured surface (e.g. inside the header), it blends in. Retune locally:
 
 ```css
 .scope-where-bg-is-dark .tl-toggle {
-  --toggle-background-off: var(--color-foreground-icon-inverse-subtle);
-  --toggle-switch:         var(--color-foreground-text-inverse-strong);
-  --toggle-text:           var(--color-foreground-text-inverse-strong);
+  --toggle-background-off: var(--color-icon-inverse-subtle);
+  --toggle-switch:         var(--color-text-inverse-strong);
+  --toggle-text:           var(--color-text-inverse-strong);
 }
 ```
 
@@ -333,7 +325,7 @@ When the site "doesn't look right," run through these in order:
 | Symptom | Probable cause |
 |---|---|
 | Tabs / steppers render as native browser buttons | Per-element CSS files (`tl-folder-tab.css`, `tl-inline-tab.css`, `tl-step.css`) not loaded. Run the copy script with the append step or link them explicitly. |
-| Text stays black in dark mode | Used `--color-text-*` (doesn't exist in Lite). Switch to `--color-foreground-text-*`. |
+| Text stays black in dark mode | Used `--color-foreground-text-*` (only existed in Lite 0.1.0). Switch to `--color-text-*`. |
 | Font doesn't change on brand toggle | Body font override missing or losing the cascade. Use `html body { font-family: var(--body-01-font-family) }`. |
 | Side menu rendering above header on desktop | `--tds-z-index-header` not defined. Set to 600 in `:root`. |
 | Card content cuts off at 336px | Override `.tl-card__body .tl-card__content { max-inline-size: unset }` or add `tl-card--stretch` to that card. |

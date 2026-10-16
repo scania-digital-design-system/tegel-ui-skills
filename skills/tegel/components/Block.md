@@ -57,7 +57,7 @@ Block is non-interactive. No hover/focus/active styling.
 ## Tokens consumed
 
 - Surface: `--block-background`, `--block-background-mode-primary`, `--block-background-mode-secondary`, `--block-background-odd`, `--block-background-even`
-- Text: `--block-text-color` → `--color-foreground-text-strong`
+- Text: `--block-text-color` → `--color-text-strong`
 - Layout: `--block-padding` (16px), `--block-border-radius` (4px)
 - Typography (root):
   - Body: `--detail-01-*`

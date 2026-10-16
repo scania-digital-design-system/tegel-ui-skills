@@ -73,10 +73,10 @@ State is set explicitly via the `__step--{name}` modifier. There is no hover / f
 
 - Success node: `--stepper-icon-step-border-success` → `--component-stepper-success`
 - Error node: `--stepper-icon-step-border-warning` → `--color-system-danger-default`
-- Success/error icon: `--stepper-icon-step-checkmark` → `--color-foreground-icon-inverse-strong`
-- Current node text + border: `--stepper-current-number-with-border` → `--color-foreground-border-strong`
+- Success/error icon: `--stepper-icon-step-checkmark` → `--color-icon-inverse-strong`
+- Current node text + border: `--stepper-current-number-with-border` → `--color-border-strong`
 - Upcoming node + label: `--stepper-label-border-upcoming`, `--stepper-label-text-upcoming`
-- Connecting line: `--stepper-divider-line` → `--color-foreground-icon-disabled`
+- Connecting line: `--stepper-divider-line` → `--color-icon-disabled`
 - Icon masks: `--icon-tick-svg`, `--icon-warning-svg`
 - Typography: `--detail-01-*` (`--lg`), `--detail-05-*` (`--sm`)
 
