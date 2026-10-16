@@ -1,6 +1,6 @@
 {
   "name": "tegel-ui-skills",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Tegel design-system skills for Claude Code and Codex. Install with: npx github:scania-digital-design-system/tegel-ui-skills",
   "type": "module",
   "bin": {
